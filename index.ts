@@ -1,3 +1,4 @@
+// @ts-nocheck
 import * as SnooWrap from "snoowrap"
 import * as SnooStorm from "snoostorm"
 import * as dotenv from "dotenv"

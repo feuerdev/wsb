@@ -51,7 +51,7 @@ client.on("item", comment => {
     for(let symbol of symbols) {
       const index = aggregate.search("\\b"+symbol+"\\b")
       if(index != -1) {
-        storeData(symbol, comment.created)
+        storeData(symbol, comment.created_utc)
       }
     }
   }

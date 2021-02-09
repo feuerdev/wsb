@@ -1,0 +1,21 @@
+{
+  "name": "wsb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@swingtrackr/stock-exchange-symbols": "^1.1.1",
+    "dotenv": "^8.2.0",
+    "firebase-admin": "^9.4.2",
+    "snoostorm": "^1.5.2",
+    "snoowrap": "^1.22.0"
+  },
+  "devDependencies": {
+    "@types/node": "^14.14.25"
+  }
+}

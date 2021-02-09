@@ -1,0 +1,5 @@
+.env
+wsb-moon-firebase-adminsdk-707s1-5c5ef1fcdc.json
+node_modules
+*.js
+*.js.map

@@ -14,18 +14,50 @@ admin.initializeApp({
 const db = admin.firestore();
 
 //Regex matching for "moon or 🚀"
-const pattern_moon:RegExp = new RegExp("(🚀|moon)", "i")
+const pattern_moon: RegExp = new RegExp("(🚀|moon)", "i")
 
 //Prepare array of symbols 
-let symbols:String[] = tickers.symbols.map((symbol) => {
+
+let ignored: String[] = [
+  "DD",
+  "III",
+  "A",
+  "PT",
+  "ARE",
+  "OR",
+  "GO",
+  "ON",
+  "IT",
+  "FOR",
+  "ALL",
+  "T",
+  "M",
+  "NOW",
+  "AT",
+  "BE",
+  "E",
+  "CAN",
+  "RH",
+  "CEO",
+  "F",
+  "RE",
+  "Y",
+  "D",
+  "LOVE",
+  "C",
+  "OUT",
+  "G",
+  "SO",
+  "AM",
+  "SOS",
+  "O",
+]
+
+let symbols: String[] = tickers.symbols.map((symbol) => {
   return symbol.symbol
 }).filter((symbol) => {
-  if(symbol == "DD") return false
-  if(symbol == "III") return false
-  if(symbol == "A") return false
-  if(symbol == "PT") return false
-  if(symbol == "ARE") return false
-  if(symbol == "OR") return false
+  if(symbol.length <= 1) { return false }
+  if(ignored.includes(symbol)) { return false }
   return true
 })
 
@@ -46,22 +78,22 @@ console.log("Started Streaming comments!")
 
 client.on("item", comment => {
   const body = comment.body
-  if(pattern_moon.test(body.toLowerCase())) {
+  if (pattern_moon.test(body.toLowerCase())) {
     const aggregate = body + " " + comment.link_title
-    for(let symbol of symbols) {
-      const index = aggregate.search("\\b"+symbol+"\\b")
-      if(index != -1) {
+    for (let symbol of symbols) {
+      const index = aggregate.search("\\b" + symbol + "\\b")
+      if (index != -1) {
         storeData(symbol, comment.created_utc)
       }
     }
   }
 })
 
-async function storeData(symbol:String, timeStamp:Number) {
+async function storeData(symbol: String, timeStamp: Number) {
   const res = await db.collection('rockets').add({
     symbol: symbol,
     time: timeStamp
   });
-  
-  console.log(symbol + " is going to the moon. Timestamp: "+timeStamp);
+
+  console.log(symbol + " is going to the moon. Timestamp: " + timeStamp);
 }
